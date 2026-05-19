@@ -6,4 +6,3 @@ result-*
 *.drv
 .direnv
 .envrc
-hardware-configuration.nix
