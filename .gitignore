@@ -1,0 +1,9 @@
+result
+result-*
+*.qcow2
+*.img
+*.iso
+*.drv
+.direnv
+.envrc
+hardware-configuration.nix
