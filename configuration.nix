@@ -102,14 +102,6 @@
     lm_sensors
     usbutils
     efibootmgr
-
-    # OpenGL
-    vscode
-    cmake
-    gcc
-    glfw
-    gnumake
-    libGL
   ];
 
   programs.steam.enable = true;
