@@ -30,6 +30,7 @@
       "explorer.confirmDelete" = false;
 
       "editor.inlayHints.enabled" = "on";
+      "editor.formatOnSave"= true;
     };
   };
 }

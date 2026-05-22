@@ -7,6 +7,7 @@
       zed = "zeditor";
       bashr = "source ~/.bashrc";
       nixr = "sudo nixos-rebuild switch --flake ~/nixos-config#nixos";
+      nixs = "nix-shell";
       plasmar = "systemctl --user restart plasma-plasmashell";
       gpu = "git push -u origin HEAD";
       vps = "ssh ubuntu@51.83.42.59";
