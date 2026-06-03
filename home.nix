@@ -47,6 +47,11 @@
     # Gaming
     steamcmd
     r2modman
+
+    # Unity
+    unityhub
+    p7zip
+    dotnet-sdk_8
   ];
 
   home.sessionVariables = {
