@@ -52,6 +52,10 @@
     unityhub
     p7zip
     dotnet-sdk_8
+
+    # AI dev tools
+    claude-code
+    codex
   ];
 
   home.sessionVariables = {
