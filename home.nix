@@ -73,7 +73,7 @@ in
     # Unity
     unityhub
     p7zip
-    dotnet-sdk_8
+    dotnet-sdk_10
 
     # AI dev tools
     claude-code
