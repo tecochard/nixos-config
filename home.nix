@@ -1,5 +1,27 @@
 { config, pkgs, ... }:
 
+let
+  desktopLaunchers = {
+    "Ankama Launcher" = {
+      exec = "sh -c 'appimage-run \"/home/theoe/Applications/Ankama Launcher-Setup-x86_64.AppImage\"'";
+      icon = "/home/theoe/.local/share/icons/ankama-launcher.png";
+      categories = "Game;";
+      comment = "Launcher Dofus / Ankama";
+    };
+    "Unity Hub" = {
+      exec = "unityhub";
+      icon = "unityhub";
+      categories = "Development;";
+      comment = "Manage Unity installations and projects";
+    };
+    "Discord" = {
+      exec = "Discord";
+      icon = "discord";
+      categories = "Network;InstantMessaging;";
+      comment = "Chat for communities and friends";
+    };
+  };
+in
 {
   # Auto-import all modules from ./modules/
   imports = let
@@ -74,5 +96,24 @@
       X-GNOME-Autostart-enabled=true
     '';
   }) [ "albert" ]);
+
+  home.file = builtins.listToAttrs (map (name: {
+    name = "Desktop/${name}.desktop";
+    value = let
+      launcher = desktopLaunchers.${name};
+    in {
+      executable = true;
+      text = ''
+        [Desktop Entry]
+        Type=Application
+        Name=${name}
+        Exec=${launcher.exec}
+        Icon=${launcher.icon}
+        Terminal=false
+        Categories=${launcher.categories}
+        Comment=${launcher.comment}
+      '';
+    };
+  }) (builtins.attrNames desktopLaunchers));
 
 }
