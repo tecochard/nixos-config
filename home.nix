@@ -48,7 +48,6 @@ in
     # Productivity
     vivaldi
     discord
-    spotify
     kdePackages.kate
     zed-editor
     nodejs_22
@@ -61,10 +60,13 @@ in
     shotcut
     untrunc-anthwlock
     gimp
-    audacity
     lmms
     tiled
     appimage-run
+
+    # Music
+    spotify
+    audacity
 
     # Gaming
     steamcmd
@@ -74,10 +76,12 @@ in
     unityhub
     p7zip
     dotnet-sdk_10
+    butler
 
     # AI dev tools
     claude-code
     codex
+    opencode
   ];
 
   home.sessionVariables = {
