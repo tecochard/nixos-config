@@ -63,6 +63,7 @@ in
     lmms
     tiled
     appimage-run
+    docker
 
     # Music
     spotify
