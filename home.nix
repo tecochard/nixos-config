@@ -64,6 +64,7 @@ in
     tiled
     appimage-run
     docker
+    gitlab-runner
 
     # Music
     spotify
