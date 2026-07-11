@@ -111,11 +111,4 @@
 
   system.stateVersion = "25.11";
 
-  services.gitlab-runner.enable = true;
-
-  systemd.services.gitlab-runner.serviceConfig = {
-    User = "theoe";
-    Group = "users";
-    WorkingDirectory = "/home/theoe";
-  };
 }

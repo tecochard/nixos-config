@@ -64,8 +64,6 @@ in
     tiled
     appimage-run
     docker
-    gitlab-runner
-
     # Music
     spotify
     audacity
@@ -78,8 +76,6 @@ in
     unityhub
     p7zip
     dotnet-sdk_10
-    butler
-
     # AI dev tools
     claude-code
     codex
