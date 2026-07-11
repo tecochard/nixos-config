@@ -84,6 +84,7 @@ in
     claude-code
     codex
     opencode
+    opencode-desktop
   ];
 
   home.sessionVariables = {
