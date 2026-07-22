@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, opencode, ... }:
 
 let
   desktopLaunchers = {
@@ -37,7 +37,7 @@ in
   home.stateVersion = "24.11"; # adjust if needed
 
   # Standalone packages (complex ones live in their own modules)
-  home.packages = with pkgs; [
+  home.packages = (with pkgs; [
     # System
     git
     gh
@@ -64,7 +64,7 @@ in
     tiled
     appimage-run
     docker
-    
+
     # Music
     spotify
     audacity
@@ -80,11 +80,13 @@ in
     gitlab-runner
     butler
 
-    # AI dev tools
+    # AI dev tools from nixpkgs
     claude-code
     codex
-    opencode
-    opencode-desktop
+  ]) ++ [
+    # Latest versions from the official OpenCode flake
+    opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode
+    opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode-desktop
   ];
 
   home.sessionVariables = {
@@ -122,5 +124,4 @@ in
       '';
     };
   }) (builtins.attrNames desktopLaunchers));
-
 }
