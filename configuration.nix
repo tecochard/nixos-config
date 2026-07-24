@@ -89,6 +89,7 @@
   users.users.theoe = {
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.zsh;
   };
 
   nix.settings.download-buffer-size = 134217728; # 128 MiB
@@ -108,6 +109,7 @@
   programs.steam.enable = true;
   programs.noisetorch.enable = true;
   programs.kdeconnect.enable = true;
+  programs.zsh.enable = true;
 
   system.stateVersion = "25.11";
 }
