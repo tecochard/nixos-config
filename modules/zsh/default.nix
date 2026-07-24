@@ -26,6 +26,12 @@
     initContent = ''
       zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}'
 
+      autoload -Uz add-zsh-hook vcs_info
+      zstyle ':vcs_info:git:*' formats ' %F{blue}(%b)%f'
+      add-zsh-hook precmd vcs_info
+      setopt prompt_subst
+      PROMPT='%n@%m:%~''${vcs_info_msg_0_} > '
+
       vpscp() {
         scp "$@" ubuntu@51.83.42.59:~
       }
