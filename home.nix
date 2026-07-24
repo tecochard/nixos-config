@@ -43,6 +43,7 @@ in
     gh
     zip
     unzip
+    nixfmt
     hardinfo2
 
     # Productivity
