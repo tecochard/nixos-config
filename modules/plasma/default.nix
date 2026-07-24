@@ -6,6 +6,7 @@ in
 {
   programs.plasma.enable = true;
   programs.plasma.workspace.wallpaper = wallpaper;
+  programs.plasma.input.keyboard.numlockOnStartup = "on";
 
   systemd.user.services.plasma-apply-wallpaper = {
     Unit = {
