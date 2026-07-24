@@ -19,42 +19,44 @@
     opencode.url = "github:anomalyco/opencode/dev";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    plasma-manager,
-    opencode,
-    ...
-  }:
-  let
-    system = "x86_64-linux";
-  in {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      inherit system;
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      plasma-manager,
+      opencode,
+      ...
+    }:
+    let
+      system = "x86_64-linux";
+    in
+    {
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+        inherit system;
 
-      modules = [
-        ./configuration.nix
-        home-manager.nixosModules.home-manager
+        modules = [
+          ./configuration.nix
+          home-manager.nixosModules.home-manager
 
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.backupFileExtension = "backup";
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup";
 
-          # Makes the OpenCode flake available inside home.nix.
-          home-manager.extraSpecialArgs = {
-            inherit opencode;
-          };
+            # Makes the OpenCode flake available inside home.nix.
+            home-manager.extraSpecialArgs = {
+              inherit opencode;
+            };
 
-          home-manager.users.theoe = {
-            imports = [
-              plasma-manager.homeModules.plasma-manager
-              ./home.nix
-            ];
-          };
-        }
-      ];
+            home-manager.users.theoe = {
+              imports = [
+                plasma-manager.homeModules.plasma-manager
+                ./home.nix
+              ];
+            };
+          }
+        ];
+      };
     };
-  };
 }

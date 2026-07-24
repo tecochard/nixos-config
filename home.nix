@@ -1,4 +1,9 @@
-{ config, pkgs, opencode, ... }:
+{
+  config,
+  pkgs,
+  opencode,
+  ...
+}:
 
 let
   desktopLaunchers = {
@@ -24,10 +29,12 @@ let
 in
 {
   # Auto-import all modules from ./modules/
-  imports = let
-    modulesDir = ./modules;
-    entries = builtins.readDir modulesDir;
-  in map (name: modulesDir + "/${name}") (builtins.attrNames entries);
+  imports =
+    let
+      modulesDir = ./modules;
+      entries = builtins.readDir modulesDir;
+    in
+    map (name: modulesDir + "/${name}") (builtins.attrNames entries);
 
   home.username = "theoe";
   home.homeDirectory = "/home/theoe";
@@ -37,58 +44,60 @@ in
   home.stateVersion = "24.11"; # adjust if needed
 
   # Standalone packages (complex ones live in their own modules)
-  home.packages = (with pkgs; [
-    # System
-    git
-    gh
-    zip
-    unzip
-    nixfmt
-    hardinfo2
+  home.packages =
+    (with pkgs; [
+      # System
+      git
+      gh
+      zip
+      unzip
+      nixfmt
+      hardinfo2
 
-    # Productivity
-    vivaldi
-    discord
-    kdePackages.kate
-    zed-editor
-    nodejs_22
-    corepack_22
-    libreoffice
-    google-fonts
-    kdePackages.kcolorchooser
-    obs-studio
-    mpv
-    shotcut
-    untrunc-anthwlock
-    gimp
-    lmms
-    tiled
-    appimage-run
-    docker
+      # Productivity
+      vivaldi
+      discord
+      kdePackages.kate
+      zed-editor
+      nodejs_22
+      corepack_22
+      libreoffice
+      google-fonts
+      kdePackages.kcolorchooser
+      obs-studio
+      mpv
+      shotcut
+      untrunc-anthwlock
+      gimp
+      lmms
+      tiled
+      appimage-run
+      docker
 
-    # Music
-    spotify
-    audacity
+      # Music
+      spotify
+      audacity
 
-    # Gaming
-    steamcmd
-    r2modman
+      # Gaming
+      steamcmd
+      r2modman
 
-    # Unity
-    unityhub
-    p7zip
-    dotnet-sdk_10
-    gitlab-runner
-    butler
+      # Unity
+      unityhub
+      p7zip
+      dotnet-sdk_10
+      gitlab-runner
+      butler
 
-    # AI dev tools from nixpkgs
-    claude-code
-    codex
-  ]) ++ [
-    # Latest versions from the official OpenCode flake
-    opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode
-    opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode-desktop
-  ];
+      # AI dev tools from nixpkgs
+      claude-code
+      codex
+    ])
+    ++ [
+      # Latest versions from the official OpenCode flake
+      opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode
+      opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode-desktop
+    ];
 
   home.sessionVariables = {
     EDITOR = "zeditor";
@@ -96,33 +105,39 @@ in
   };
 
   # Startup apps
-  xdg.configFile = builtins.listToAttrs (map (app: {
-    name = "autostart/${app}.desktop";
-    value.text = ''
-      [Desktop Entry]
-      Type=Application
-      Name=${app}
-      Exec=${app}
-      X-GNOME-Autostart-enabled=true
-    '';
-  }) [ "albert" ]);
-
-  home.file = builtins.listToAttrs (map (name: {
-    name = "Desktop/${name}.desktop";
-    value = let
-      launcher = desktopLaunchers.${name};
-    in {
-      executable = true;
-      text = ''
+  xdg.configFile = builtins.listToAttrs (
+    map (app: {
+      name = "autostart/${app}.desktop";
+      value.text = ''
         [Desktop Entry]
         Type=Application
-        Name=${name}
-        Exec=${launcher.exec}
-        Icon=${launcher.icon}
-        Terminal=false
-        Categories=${launcher.categories}
-        Comment=${launcher.comment}
+        Name=${app}
+        Exec=${app}
+        X-GNOME-Autostart-enabled=true
       '';
-    };
-  }) (builtins.attrNames desktopLaunchers));
+    }) [ "albert" ]
+  );
+
+  home.file = builtins.listToAttrs (
+    map (name: {
+      name = "Desktop/${name}.desktop";
+      value =
+        let
+          launcher = desktopLaunchers.${name};
+        in
+        {
+          executable = true;
+          text = ''
+            [Desktop Entry]
+            Type=Application
+            Name=${name}
+            Exec=${launcher.exec}
+            Icon=${launcher.icon}
+            Terminal=false
+            Categories=${launcher.categories}
+            Comment=${launcher.comment}
+          '';
+        };
+    }) (builtins.attrNames desktopLaunchers)
+  );
 }

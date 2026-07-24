@@ -79,21 +79,29 @@
     pulse.enable = true;
 
     wireplumber.extraConfig."disable-webcam-mic" = {
-      "monitor.alsa.rules" = [{
-        matches = [{ "node.name" = "alsa_input.usb-Jieli_Technology_USB_PHY_2.0-02.mono-fallback"; }];
-        actions.update-props."node.disabled" = true;
-      }];
+      "monitor.alsa.rules" = [
+        {
+          matches = [ { "node.name" = "alsa_input.usb-Jieli_Technology_USB_PHY_2.0-02.mono-fallback"; } ];
+          actions.update-props."node.disabled" = true;
+        }
+      ];
     };
   };
 
   users.users.theoe = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     shell = pkgs.zsh;
   };
 
   nix.settings.download-buffer-size = 134217728; # 128 MiB
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   nixpkgs.config.allowUnfree = true;
 
