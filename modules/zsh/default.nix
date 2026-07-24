@@ -30,7 +30,7 @@
       zstyle ':vcs_info:git:*' formats ' %F{blue}(%b)%f'
       add-zsh-hook precmd vcs_info
       setopt prompt_subst
-      PROMPT='%n@%m:%~''${vcs_info_msg_0_} > '
+      PROMPT='%F{green}%n%f@%m:%~''${vcs_info_msg_0_} > '
 
       vpscp() {
         scp "$@" ubuntu@51.83.42.59:~
