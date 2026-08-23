@@ -25,6 +25,30 @@ let
       categories = "Network;InstantMessaging;";
       comment = "Chat for communities and friends";
     };
+    "OpenCode" = {
+      exec = "opencode-desktop";
+      icon = "ai.opencode.desktop";
+      categories = "Development;";
+      comment = "AI coding agent";
+    };
+    "The Witcher 3: Wild Hunt" = {
+      exec = "steam steam://rungameid/292030";
+      icon = "steam_icon_292030";
+      categories = "Game;";
+      comment = "Play The Witcher 3: Wild Hunt";
+    };
+    "Outer Wilds" = {
+      exec = "steam steam://rungameid/753640";
+      icon = "steam_icon_753640";
+      categories = "Game;";
+      comment = "Play Outer Wilds";
+    };
+    "OBS Studio" = {
+      exec = "obs";
+      icon = "com.obsproject.Studio";
+      categories = "AudioVideo;Recorder;";
+      comment = "Record and stream video";
+    };
   };
 in
 {
