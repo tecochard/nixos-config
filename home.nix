@@ -81,6 +81,7 @@ in
       # Productivity
       vivaldi
       discord
+      wasistlos
       kdePackages.kate
       zed-editor
       nodejs_22

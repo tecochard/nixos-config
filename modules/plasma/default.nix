@@ -7,6 +7,12 @@ in
   programs.plasma.enable = true;
   programs.plasma.workspace.wallpaper = wallpaper;
   programs.plasma.input.keyboard.numlockOnStartup = "on";
+  programs.plasma.shortcuts.ksmserver."Lock Session" = [ "Screensaver" ];
+  programs.plasma.hotkeys.commands.suspend = {
+    name = "Suspend";
+    key = "Meta+L";
+    command = "${pkgs.systemd}/bin/systemctl suspend";
+  };
 
   systemd.user.services.plasma-apply-wallpaper = {
     Unit = {
