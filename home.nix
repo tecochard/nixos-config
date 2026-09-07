@@ -81,7 +81,6 @@ in
       # Productivity
       vivaldi
       discord
-      wasistlos
       kdePackages.kate
       zed-editor
       nodejs_22
@@ -92,9 +91,10 @@ in
       obs-studio
       mpv
       shotcut
-      untrunc-anthwlock
-      gimp
-      lmms
+    untrunc-anthwlock
+    gimp
+    blender
+    lmms
       tiled
       appimage-run
       docker
