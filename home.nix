@@ -113,6 +113,7 @@ in
       dotnet-sdk_10
       gitlab-runner
       butler
+      ffmpeg
 
       # AI dev tools from nixpkgs
       claude-code
