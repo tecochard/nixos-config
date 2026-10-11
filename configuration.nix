@@ -118,5 +118,8 @@
   programs.kdeconnect.enable = true;
   programs.zsh.enable = true;
 
+  # Run the generic Linux binaries bundled with VS Code's C# extensions.
+  programs.nix-ld.enable = true;
+
   system.stateVersion = "25.11";
 }
