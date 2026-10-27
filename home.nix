@@ -6,6 +6,16 @@
 }:
 
 let
+  opencodePackages = opencode.packages.${pkgs.stdenv.hostPlatform.system};
+  # v2.2.0's desktop build ignores the CLI directory prepared by its Nix derivation.
+  opencodeDesktop = opencodePackages.opencode-desktop.overrideAttrs (old: {
+    postPatch = old.postPatch + ''
+      substituteInPlace packages/desktop/script/build.ts \
+        --replace-fail 'const cli = path.resolve(dir, "../cli/dist")' \
+                       'const cli = process.env.OPENCODE_CLI_DIST ?? path.resolve(dir, "../cli/dist")'
+    '';
+  });
+
   desktopLaunchers = {
     "Ankama Launcher" = {
       exec = "sh -c 'appimage-run \"/home/theoe/Applications/Ankama Launcher-Setup-x86_64.AppImage\"'";
@@ -120,9 +130,9 @@ in
       codex
     ])
     ++ [
-      # Latest versions from the official OpenCode flake
-      opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode
-      opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode-desktop
+      # CLI and desktop from the same pinned OpenCode v2 release
+      opencodePackages.opencode
+      opencodeDesktop
     ];
 
   home.sessionVariables = {

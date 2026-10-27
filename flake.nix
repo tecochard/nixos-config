@@ -15,8 +15,8 @@
       inputs.home-manager.follows = "home-manager";
     };
 
-    # Tracks the latest official OpenCode development build.
-    opencode.url = "github:anomalyco/opencode/dev";
+    # Pin both the CLI and desktop app to the official OpenCode v2 release.
+    opencode.url = "github:anomalyco/opencode/v2.2.0";
   };
 
   outputs =
