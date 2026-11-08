@@ -17,6 +17,12 @@
 
     # Pin both the CLI and desktop app to the official OpenCode v2 release.
     opencode.url = "github:anomalyco/opencode/v2.2.0";
+
+    # Refresh after local changes: nix flake update dofus-organizer
+    dofus-organizer = {
+      url = "path:/home/theoe/Documents/dev/dofus";
+      flake = false;
+    };
   };
 
   outputs =
@@ -26,6 +32,7 @@
       home-manager,
       plasma-manager,
       opencode,
+      dofus-organizer,
       ...
     }:
     let
@@ -44,9 +51,9 @@
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
 
-            # Makes the OpenCode flake available inside home.nix.
+            # Make application sources available inside home.nix.
             home-manager.extraSpecialArgs = {
-              inherit opencode;
+              inherit opencode dofus-organizer;
             };
 
             home-manager.users.theoe = {

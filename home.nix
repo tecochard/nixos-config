@@ -2,13 +2,18 @@
   config,
   pkgs,
   opencode,
+  dofus-organizer,
   ...
 }:
 
 let
   opencodePackages = opencode.packages.${pkgs.stdenv.hostPlatform.system};
+  # Desktop discovers service.json; the upstream Nix "prod" channel writes service-prod.json.
+  opencodeCli = opencodePackages.opencode.overrideAttrs (old: {
+    env = old.env // { OPENCODE_CHANNEL = "latest"; };
+  });
   # v2.2.0's desktop build ignores the CLI directory prepared by its Nix derivation.
-  opencodeDesktop = opencodePackages.opencode-desktop.overrideAttrs (old: {
+  opencodeDesktop = (opencodePackages.opencode-desktop.override { opencode = opencodeCli; }).overrideAttrs (old: {
     postPatch = old.postPatch + ''
       substituteInPlace packages/desktop/script/build.ts \
         --replace-fail 'const cli = path.resolve(dir, "../cli/dist")' \
@@ -131,8 +136,9 @@ in
     ])
     ++ [
       # CLI and desktop from the same pinned OpenCode v2 release
-      opencodePackages.opencode
+      opencodeCli
       opencodeDesktop
+      (import dofus-organizer { inherit pkgs; })
     ];
 
   home.sessionVariables = {

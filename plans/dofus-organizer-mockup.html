@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="fr">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Organizer — Maquette</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,system-ui,sans-serif;background:#141619;color:#e9eaed;font-size:14px}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:28px}button,input{font:inherit}button{cursor:pointer}main{width:min(100%,420px)}.window{background:#22252a;border:1px solid #383c43;border-radius:13px;box-shadow:0 25px 80px #0005;overflow:hidden}header{height:49px;border-bottom:1px solid #34383e;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:13px;font-weight:550}.close{background:none;border:0;color:#969da7;font-size:21px;padding:4px 8px;border-radius:5px}.close:hover{background:#383c43;color:white}.content{padding:25px 24px 20px}.status{display:flex;align-items:center;gap:9px;font-weight:550}.dot{width:7px;height:7px;border-radius:50%;background:#94cba9}.paused .dot{background:#d1b47b}p{font-size:12px;color:#9ca3af;line-height:1.6;margin:9px 0 25px}.row{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:17px 0;border-top:1px solid #34383e}.label{font-size:13px}.hint{font-size:11px;color:#979faa;margin-top:5px}.key{background:#2c3036;border:1px solid #494f58;color:#e3e6eb;border-radius:6px;padding:8px 12px;min-width:91px;font-size:12px;white-space:nowrap}.key:hover{border-color:#91a7ba}.key.listening{border-color:#9ab8ce;color:#b9d6ea}.footer{padding-top:22px}.toggle{background:#e0e7ed;color:#20252b;border:1px solid transparent;border-radius:7px;padding:11px 16px;width:100%;font-weight:550;font-size:13px}.toggle:hover{background:white}.note{text-align:center;font-size:11px;color:#848c98;margin:12px 0 0}.caption{color:#727b87;font-size:11px;text-align:center;margin:19px 0}.message{color:#d7bb84;line-height:1.5;font-size:12px;margin:12px 0 0}.restart{display:block;margin:18px auto;background:#2c3036;color:#e3e6eb;border:1px solid #494f58;border-radius:7px;padding:10px 18px}[hidden]{display:none!important}button:focus-visible{outline:2px solid #b8d7ee;outline-offset:3px}@media(max-width:440px){body{padding:16px}.content{padding:22px 18px}.key{min-width:82px}}
+.status-line{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}.switch{width:38px;height:22px;border:0;border-radius:20px;background:#94cba9;padding:3px;flex-shrink:0}.switch::after{content:"";display:block;width:16px;height:16px;border-radius:50%;background:#20252b;transform:translateX(16px);transition:transform .15s}.switch[aria-checked="false"]{background:#606873}.switch[aria-checked="false"]::after{transform:translateX(0)}
+.title-actions{display:flex;align-items:center;gap:12px}.paused .row{opacity:.55}.content>.row:first-child{border-top:0;padding-top:0}.content>.row:has(+.message){padding-bottom:0}
+</style>
+<main>
+  <section class="window" id="app" aria-label="Organizer">
+    <header><div class="title-actions"><span>Organizer</span><button class="switch" id="toggle" role="switch" aria-checked="true" aria-label="Activer les raccourcis" title="Suspendre les raccourcis"></button></div><button class="close" id="quit" aria-label="Quitter Organizer" title="Quitter">×</button></header>
+    <div class="content">
+      <div class="row"><div><div class="label">Changer de personnage</div><div class="hint">Depuis le navigateur : retour au jeu</div></div><button class="key" data-action="character" aria-label="Modifier le raccourci Changer de personnage">Tab</button></div>
+      <div class="row"><div class="label">Jeu ↔ navigateur</div><button class="key" data-action="browser" aria-label="Modifier le raccourci Jeu et navigateur">Maj + Tab</button></div>
+      <div class="message" id="message" role="status" hidden></div>
+    </div>
+  </section>
+  <button class="restart" id="restart" hidden>Relancer la maquette</button>
+  <p class="caption">Maquette interactive · aucune touche système interceptée</p>
+</main>
+<script>
+const app=document.querySelector('#app'), toggle=document.querySelector('#toggle'), message=document.querySelector('#message');
+let paused=false,editing=null;
+const bindings={character:'Tab',browser:'Maj + Tab'};
+function stopEditing(){if(!editing)return;editing.textContent=bindings[editing.dataset.action];editing.classList.remove('listening');editing=null;}
+document.querySelectorAll('.key').forEach(button=>button.addEventListener('click',()=>{stopEditing();editing=button;button.classList.add('listening');button.textContent='Votre touche…';message.hidden=false;message.textContent='Appuyez sur un raccourci. Échap pour annuler.';}));
+document.addEventListener('keydown',event=>{if(!editing)return;event.preventDefault();event.stopPropagation();if(event.key==='Escape'){stopEditing();message.hidden=true;return;}if(['Control','Shift','Alt','Meta'].includes(event.key))return;const parts=[];if(event.ctrlKey)parts.push('Ctrl');if(event.altKey)parts.push('Alt');if(event.shiftKey)parts.push('Maj');if(event.metaKey)parts.push('Meta');parts.push(event.key===' '?'Espace':event.key.length===1?event.key.toUpperCase():event.key);const value=parts.join(' + ');if(Object.entries(bindings).some(([action,key])=>action!==editing.dataset.action&&key===value)){message.textContent='Ce raccourci est déjà utilisé par l’autre action.';return;}bindings[editing.dataset.action]=value;stopEditing();message.textContent='Raccourci modifié pour cette démonstration.';});
+toggle.addEventListener('click',()=>{stopEditing();message.hidden=true;paused=!paused;app.classList.toggle('paused',paused);toggle.setAttribute('aria-checked',String(!paused));toggle.title=paused?'Activer les raccourcis':'Suspendre les raccourcis';});
+document.querySelector('#quit').addEventListener('click',()=>{stopEditing();app.hidden=true;document.querySelector('#restart').hidden=false;document.querySelector('#restart').focus();});
+document.querySelector('#restart').addEventListener('click',()=>{app.hidden=false;document.querySelector('#restart').hidden=true;if(paused)toggle.click();message.hidden=true;toggle.focus();});
+</script>
+</html>

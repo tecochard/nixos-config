@@ -1,5 +1,18 @@
 {
   "nodes": {
+    "dofus-organizer": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793825994,
+        "narHash": "sha256-9RxgW3xPgZmFW64nbhwI7S9HxRbIcDFUihW29Z12L04=",
+        "path": "/home/theoe/Documents/dev/dofus",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/theoe/Documents/dev/dofus",
+        "type": "path"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -96,6 +109,7 @@
     },
     "root": {
       "inputs": {
+        "dofus-organizer": "dofus-organizer",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "opencode": "opencode",

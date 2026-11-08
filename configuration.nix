@@ -56,6 +56,11 @@
   };
   hardware.graphics.enable = true;
 
+  # OpenRGB: motherboard USB controller and RAM RGB over SMBus.
+  services.udev.packages = [ pkgs.openrgb ];
+  hardware.i2c.enable = true;
+  boot.kernelModules = [ "i2c-i801" ];
+
   hardware.xone.enable = true;
   powerManagement.cpuFreqGovernor = "performance";
   systemd.targets.hibernate.enable = false;
